@@ -1,0 +1,5 @@
+##[pylyzer] failed /home/offlinebot/Coding/py/detection/src/ai_class/detection.py 1729107241 80
+.___v_desugar_1 = pyimport "<failure>"
+.<failure> = pyimport "<failure>"
+.dataclass: Never
+.detection: () -> Never

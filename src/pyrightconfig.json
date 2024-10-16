@@ -1,0 +1,9 @@
+
+{
+  "typeCheckingMode": "basic",
+  "python.analysis.extraPaths": ["./src"],
+  "python.analysis.stubPaths": ["./typings"],
+  "python.analysis.diagnosticMode": "openFilesOnly",
+  "include": ["src/**/*.py"],
+  "exclude": ["**/__pycache__"]
+}
