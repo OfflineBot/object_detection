@@ -1,6 +1,6 @@
 
-from detection_set.dataclass import DataClass
+from dataset.dataclass import DataClass
 
 x = DataClass("asfd")
-
+x.init()
 
