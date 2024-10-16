@@ -1,5 +1,6 @@
 
-from ai_class.detection import detection
+from detection_set.dataclass import DataClass
 
-detection()
+x = DataClass("asfd")
+
 
