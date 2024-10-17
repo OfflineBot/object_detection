@@ -1,10 +1,16 @@
 
+from PIL.ImageFile import ImageFile
+import numpy as np
+from numpy.typing import NDArray
 from dataclasses import dataclass
 from typing import List
 import json
 import os
 import matplotlib.pyplot as plt
 from PIL import Image, ImageDraw
+from torch import return_types
+
+from ai.detection import NDArray
 
 
 @dataclass
@@ -16,9 +22,11 @@ class Object:
 
 class DataClass:
 
-    def __init__(self, absolute_json_path: str):
+    def __init__(self, dataset_dir_path: str, absolute_json_path: str):
         self.path_to_json: str = absolute_json_path
+        self.dataset_dir_path: str = dataset_dir_path
         self.objects: List[Object] = []
+        self.length = 0
 
     # initialize objects from json file
     def init(self) -> None:
@@ -28,14 +36,15 @@ class DataClass:
             for obj in dataset_list:
                 new_obj = Object(obj['label'], obj['image'], obj['positions'])
                 self.objects.append(new_obj)
+                self.length += 1
 
     def print_objs(self) -> None:
         for obj in self.objects:
             print(f"Label: [{obj.label}] | Image: [{obj.image_path}]")
 
-    def validate(self, dataset_dir_path: str) -> None:
+    def validate(self) -> None:
         for obj in self.objects:
-            path = os.path.join(dataset_dir_path, obj.image_path)
+            path = os.path.join(self.dataset_dir_path, obj.image_path)
             img = Image.open(path)
             draw = ImageDraw.Draw(img)
             for pos in obj.positions:
@@ -59,5 +68,8 @@ class DataClass:
                 plt.close()
                 continue
 
-
+    def get_image_value(self, image_path: str) -> NDArray[np.float32]:
+        path: str = os.path.join(self.dataset_dir_path, image_path)
+        img: ImageFile = Image.open(path)
+        return np.array(img)
 
