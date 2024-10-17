@@ -2,6 +2,9 @@
 from dataclasses import dataclass
 from typing import List
 import json
+import os
+import matplotlib.pyplot as plt
+from PIL import Image, ImageDraw
 
 
 @dataclass
@@ -13,8 +16,8 @@ class Object:
 
 class DataClass:
 
-    def __init__(self, absolute_json_path):
-        self.path_to_json = absolute_json_path
+    def __init__(self, absolute_json_path: str):
+        self.path_to_json: str = absolute_json_path
         self.objects: List[Object] = []
 
     # initialize objects from json file
@@ -23,14 +26,38 @@ class DataClass:
             json_data = json.load(file)
             dataset_list = json_data['dataset']
             for obj in dataset_list:
-                new_obj = Object(obj['label'], obj['image_path'], obj['positions'])
+                new_obj = Object(obj['label'], obj['image'], obj['positions'])
                 self.objects.append(new_obj)
 
     def print_objs(self) -> None:
         for obj in self.objects:
             print(f"Label: [{obj.label}] | Image: [{obj.image_path}]")
 
-    def validate(self) -> None:
-        print("TODO! (open image and check if correct)")
+    def validate(self, dataset_dir_path: str) -> None:
+        for obj in self.objects:
+            path = os.path.join(dataset_dir_path, obj.image_path)
+            img = Image.open(path)
+            draw = ImageDraw.Draw(img)
+            for pos in obj.positions:
+                x1, x2, y1, y2 = pos
+                coords = (x1, x2, y1, y2)
+                draw.rectangle(coords, outline='red', width=1)
+            plt.imshow(img)
+            plt.axis('off')
+            plt.show(block=False)
+
+            is_ok = input("Is ok? (y/n)> ")
+            if is_ok == "y":
+                plt.close()
+                continue
+            elif is_ok == "n":
+                plt.close()
+                print("something should be done now :)")
+                continue
+            else:
+                print("unknown input. just skipping this image and closing it")
+                plt.close()
+                continue
+
 
 
