@@ -1,6 +1,8 @@
 
 from dataset.dataclass import DataClass
 
-x = DataClass("asfd")
-x.init()
+full_path_to_json = "/home/offlinebot/Coding/py/object_detection/dataset/data.json"
 
+x = DataClass(full_path_to_json)
+x.init()
+x.print_objs()

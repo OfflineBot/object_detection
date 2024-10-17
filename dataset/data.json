@@ -6,6 +6,13 @@
             "positions": [
                 []
             ]
+        },
+        {
+            "label": "test",
+            "image_path": "none",
+            "positions": [
+                []
+            ]
         }
     ]
 }
