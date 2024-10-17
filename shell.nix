@@ -8,6 +8,7 @@ pkgs.mkShell {
         numpy
         pillow
         matplotlib
+        mypy
     ]);
 
     shellHook = ''

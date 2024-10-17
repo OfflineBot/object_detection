@@ -8,7 +8,6 @@ import json
 import os
 import matplotlib.pyplot as plt
 from PIL import Image, ImageDraw
-from torch import return_types
 
 from ai.detection import NDArray
 

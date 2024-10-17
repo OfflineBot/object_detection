@@ -1,7 +1,6 @@
 
 from typing import Tuple
 from numpy.typing import NDArray
-import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -18,7 +17,7 @@ class DetectionNN(nn.Module):
         self.conv3 = nn.Conv2d(32, 64, kernel_size=3, stride=1, padding=1)
         self.conv4 = nn.Conv2d(64, 128, kernel_size=3, stride=1, padding=1)
 
-        self.fc1 = nn.Linear(128 * 8 * 8, 1024)
+        self.fc1 = nn.Linear(128 * 6 * 6, 1024)
         self.fc2 = nn.Linear(1024, 512)
         self.fc3_boxes = nn.Linear(512, num_objects * 4)
         self.fc3_classes = nn.Linear(512, num_classes * num_objects)
